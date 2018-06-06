@@ -43,10 +43,13 @@ app.use(passport.session())
 
 
 let userData;
+var _id;
 
 app.post('/login', passport.authenticate('user',{failureRedirect:'/login'}),(req,res)=>{
     console.log('Login Encountered')
     userData=req.user
+    _id=req.user._id;
+    console.log('user'+req.user._id);
     res.json({
             "path":"/timing",
             "userData":req.user
@@ -70,6 +73,7 @@ app.post('/signup',(req,res,next)=>{
 })
 
 app.post('/Namaztiming',(req,res,next)=>{
+
     let time = new Namaztiming();
     time.fajardatetime = req.body. fajardatetime
  
@@ -95,28 +99,42 @@ app.post('/Namaztiming',(req,res,next)=>{
 })
 
 app.get('/User',(req,res)=>{
+    if(req.query.token=='masjiddata'){
        console.log(userData);
-        res.send(userData);
+        res.send(userData);}
+})
+    
+app.get('/getAllUsers',(req,res)=>{
+  if(req.query.token=='masjiddata'){
+    User.find({},function(err,user){
+             res.send(user);
+   })
+    }
 })
 
-app.get('/getAllUsers',(req,res)=>{
-    User.find({},function(err,user){
-        res.send(user);
-   })
-})
 app.get('/getTime',(req,res)=>{
+    if(req.query.token=='masjiddata'){
     Namaztiming.find({},function(err,user){
         res.send(user);
    })
+   }
 })
-app.get('/getTime',(req,res) => {
-    const token = req.qeury.token;
-      console.log(token);
-    // //localhost:9000/userdashboard?token=chocolatecandy
-    // if(token === 'chocolatecandy') {
-    //     //Send data to user
-    // }
-});
+app.get('/oneTime',(req,res)=>{
+ 
+    Namaztiming.findOne({},function(err,user){
+        res.send(user);
+   })
+  
+})
+
+// app.get('/getTime',(req,res) => {
+//     const token = req.qeury.token;
+//       console.log(token);
+//     // //localhost:9000/userdashboard?token=chocolatecandy
+//     // if(token === 'chocolatecandy') {
+//     //     //Send data to user
+//     // }
+// });
  
 server=app.listen(9000, (err) => {
     if (err) {

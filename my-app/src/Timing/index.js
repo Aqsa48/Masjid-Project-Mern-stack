@@ -31,12 +31,12 @@ export default class extends React.Component{
             console.log(this.state.dateTime);
 
         this.setState({});
-           axios.get('http://localhost:9000/User')
+           axios.get('http://localhost:9000/User?token=masjiddata')
             .then((res)=>{
                   this.setState({USER:res.data})
             })
 
-            axios.get('http://localhost:9000/getAllUsers')
+            axios.get('http://localhost:9000/getAllUsers?token=masjiddata')
              .then((res)=>{        
              this.setState({AllUsers:res.data});
 
@@ -49,7 +49,7 @@ export default class extends React.Component{
             })
 
         this.setState({});
-           axios.get('http://localhost:9000/getTime')
+           axios.get('http://localhost:9000/getTime?token=masjiddata')
             .then((res)=>{
                   console.log(res.data);
             })
@@ -71,7 +71,7 @@ export default class extends React.Component{
                 
             },
             headers:{
-                'Access-Control-Allow-Origin':'http://localhost:9000/createsession'
+                'Access-Control-Allow-Origin':'http://localhost:9000/Namaztiming'
             }  
         }).then((response)=>{
             if(response.data.confirmation==="Yes"){
@@ -89,74 +89,50 @@ export default class extends React.Component{
             render(){
                 return(
                  <div>
-                   fajar time  <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Set time
-                    </button>
-                    {/* <!-- Modal --> */}
-                    <div className="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                         <div>   
-                             <MuiThemeProvider>
-                                <DateTimePicker 
-                                    onChange={this.setDate}
-                                    DatePicker={DatePickerDialog}
-                                    TimePicker={TimePickerDialog}
-                                    />
-                             </MuiThemeProvider>   
-                          </div>
-                         </div>
-                                <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                                <button onClick={this.createFajarTime} >Send</button>   
-                          </div> 
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <br />
-                 Zehor time  <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Set time
-                    </button>
-                    {/* <!-- Modal --> */}
-                    <div className="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                         <div>   
-                             <MuiThemeProvider>
-                                <DateTimePicker 
-                                    onChange={this.setDate}
-                                    DatePicker={DatePickerDialog}
-                                    TimePicker={TimePickerDialog}
-                                    />
-                             </MuiThemeProvider>   
-                          </div>
-                         </div>
-                                <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                                <button onClick={this.createFajarTime} >Send</button>   
-                          </div> 
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <br />
+
+                 <input 
+                    type='text' 
+                    name='fajar' 
+                    placeholder='fajarTime'
+                    onChange={(e) => this.setState({ fajardatetime: e.target.value})} 
+
+                />
+                <input 
+                    type='text' 
+                    name='zehor' 
+                    placeholder='zehroTime'
+                    onChange={(e) => this.setState({ zehordateTime: e.target.value})} 
+
+                />
+                 <input 
+                    type='text' 
+                    name='asar' 
+                    placeholder='asarTime'
+                    onChange={(e) => this.setState({ asardateTime: e.target.value})} 
+
+                />
+
+                 <input 
+                    type='text' 
+                    name='magrib' 
+                    placeholder='magribTime'
+                    onChange={(e) => this.setState({ magribdateTime: e.target.value})} 
+
+                />
+
+                
+                 <input 
+                    type='text' 
+                    name='isha' 
+                    placeholder='ishaTime'
+                    onChange={(e) => this.setState({ ishadateTime: e.target.value})} 
+
+                />
+
+
+                <button onClick={this.createFajarTime} >Send</button>   
+                
+                 <br/>
           </div>
 
        )

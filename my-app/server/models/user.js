@@ -6,14 +6,12 @@ const schema=mongoose.Schema;
     
 // new Schema for customer local,facebook and google strategies
 const userModel = new schema({
-
-    username:String,
+   username:{type:String,unique:true,lowercase:true,index: { unique: true }},
     email:String,
     password:String,
     masjidname:String,
     masjidlocation:String,   
-    
-    
+        
 })
 // this method will encrypt the password of user with bcrypt library before saving in database
 // userModel.pre('save',function(next){
@@ -37,12 +35,12 @@ const userModel = new schema({
 
 
 
-// user-defined method for comparing the encrypted password
-userModel.methods.comparePassword=function(password){
-    // we use this .methods. syntax bcz it is user defined method of customerModel
-    return bcrypt.compareSync(password,this.password);
-    //this returns true or false
-}
+// // user-defined method for comparing the encrypted password
+// userModel.methods.comparePassword=function(password){
+//     // we use this .methods. syntax bcz it is user defined method of customerModel
+//     return bcrypt.compareSync(password,this.password);
+//     //this returns true or false
+// }
 
 
 module.exports=mongoose.model('userModel',userModel); //It exports the model

@@ -16,9 +16,9 @@ passport.use('user',new localStrategy(function(username,password,done){
         if(!user){
             return done(null,false);
         }
-        if(!user.comparePassword(password)){
-            return done(null,false);
-        }
+        // if(!user.comparePassword(password)){
+        //     return done(null,false);
+        // }
 
         return done(null,user);
    }) 
