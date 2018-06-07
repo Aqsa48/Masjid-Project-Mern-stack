@@ -5,28 +5,26 @@ import { Constants } from 'expo';
 import {createStackNavigator,createTabNavigator} from 'react-navigation'
 import Login from './components/screen/login';
 import Signup from './components/screen/signup';
-import Splash from './components/screen/splash';
-//import FirstScreen from './components/screen/fs';
+import Imam from './components/screen/Imam';
+import dashboard from './components/screen/dashboard';
+import Prayers from './components/screen/prayers';
+import map from './components/screen/map';
+//import FNM from './components/screen/FNM';
 const TabApp=createTabNavigator({
-   
    Signup:{screen:Signup},
-   
- }); 
-
-
+    }); 
 const StackApp=createStackNavigator({
   
-  Splash: {screen : Splash}, 
-  TabApp:{screen:TabApp},
+  dashboard: {screen : dashboard},
+  Imam: {screen : Imam}, 
+  //FNM: {screen: FNM},
+  //TabApp:{screen:TabApp},
   Login:{screen:Login },
   Signup:{screen:Signup },
- 
-
- 
+  Prayers:{screen:Prayers},
+  map: { screen : map },
+  
 }); 
-
-
-
 export default class App extends React.Component {
 constructor(props){
 super(props);

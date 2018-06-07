@@ -1,18 +1,42 @@
 import React from 'react';
-import {View, StyleSheet,Button,Image, Text, ScrollView,TouchableOpacity, TextInput } from 'react-native';
- 
+import {View, StyleSheet,Button,Image, Text, ScrollView,TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
+import axios from 'axios'; 
 export default class Sign extends React.Component {
   constructor(props){
-super(props);
+    super(props);
+  this.state={
+    user:'',
+    email:'',
+    pass:'',
+    masjidName:'',
+    masjidLocation:''
+  }
 this.handleTouch=this.handleTouch.bind(this);
     
   }
-handleTouch(){
-  this.props.navigation.navigate('TabApp');
+async handleTouch(){
+    fetch('https:namazapi.herokuapp.com/signup', {
+        method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userName: this.state.user,
+      email:this.state.email,
+      password: this.state.pass,
+      masjidName:this.state.masjidName,
+      masjidLocation:this.state.masjidLocation
+    }),
+  });
+  alert(JSON.stringify(this.state));
+//  let responseJson =  response.json();
+
+  //this.props.navigation.navigate('TabApp');
 }
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
 <View
 style={{
 width :300,
@@ -22,23 +46,22 @@ height : 500,
     justifyContent: 'center',
 }}	
 >
-<Button
-
-   title="Sign up"
-  color="orange"/>
    <Image
           style={{
              flexGrow:1,
     height:100,
     width:100,
           }}
-              source={{uri: 'http://www.yumpabar.co.uk/images/srv/page-myaccount-associated-pages/My%20Account/icon-user.png'}}  />
+              source={{uri:'https://cdn0.iconfinder.com/data/icons/mosque-1/800/mosque-2-256.png'}}  />
 
 
 <TextInput
     style =
     {styles.txtf}
-placeholder ="user name"
+placeholder ="User Name"
+onChangeText={(e)=>{
+  this.setState({user:e})
+}}
 >
 </TextInput>
 
@@ -47,22 +70,42 @@ placeholder ="user name"
    style =
      {styles.txtf}
 placeholder ="E-Mail"
+onChangeText={(e)=>{
+  this.setState({email:e})
+}}
 >
 </TextInput>
 <TextInput
    style =
      {styles.txtf}
 placeholder ="Password"
+secureTextEntry
+onChangeText={(e)=>{
+  this.setState({pass:e})
+}}
 >
 </TextInput><TextInput
    style =
  {styles.txtf}
-placeholder ="Retype Password"
+placeholder ="Masjid Name"
+onChangeText={(e)=>{
+  this.setState({masjidName:e})
+}}
+>
+</TextInput>
+<TextInput
+   style =
+ {styles.txtf}
+placeholder ="Masjid Location"
+onChangeText={(e)=>{
+  this.setState({masjidLocation:e})
+}}
 >
 </TextInput>
 
-<TouchableOpacity
 
+<TouchableOpacity
+ onPress={this.handleTouch}
  style={{
    backgroundColor:'orange',
 width :200,
@@ -86,7 +129,7 @@ Register now
 </View>
 
 
-</View>
+</KeyboardAvoidingView>
     
   
     );
@@ -96,7 +139,7 @@ Register now
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -104,7 +147,10 @@ const styles = StyleSheet.create({
      height : 30,
       width : 200,
       margin : 20,
-      backgroundColor : 'gray'
+      borderRadius: 4,
+      borderWidth: .5,
+      borderColor: 'orange',
+      backgroundColor : 'white'
     
   },
 
